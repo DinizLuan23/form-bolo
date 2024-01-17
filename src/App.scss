@@ -1,0 +1,92 @@
+// App.scss
+$bg-color: #EBF6FC;
+$text-color: #244580;
+
+* {
+   font-family: 'Arial', sans-serif;
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+}
+
+body {
+   background-color: $bg-color;
+}
+
+.container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   background-color: #CCC;
+   color: $text-color;
+   width: 100vw;
+   height: 100vh;
+   padding: 50px 0px 0px 0px;
+   max-width: 800px;
+   margin: 0 auto;
+
+   .containerTitle {
+      width: 100%;
+
+      h1 {
+         font-weight: 500;
+         font-size: 36px;
+      }
+
+      p {
+         margin-top: 20px;
+         font-size: 20px;
+      }
+
+      hr {
+         margin-top: 15px;
+         background-color: #ccc;
+         border: 0 none;
+         height: 2px;
+      }
+   }
+
+   .containerCakes {
+      width: 100%;
+      margin-top: 30px;
+
+      p {
+         font-weight: 500;
+         font-size: 20px;
+
+         span {
+            color: #FF0000;
+         }
+      }
+
+      .cakes {
+         display: grid;
+         grid-template-columns: 1fr 1fr;
+         gap: 40px;
+         margin-top: 20px;
+
+         img {
+            width: calc(100% - 10px);
+            margin-left: 10px;
+            height: 280px;
+            object-fit: fill;
+         }
+
+         div {
+            display: flex;
+            align-items: center;
+         }
+      }
+   }
+
+   .containerOrder {
+      width: 100%;
+      margin-top: 30px;
+      text-decoration: underline;
+
+      h2 {
+         font-weight: normal;
+         font-size: 30px;
+      }
+   }
+}
