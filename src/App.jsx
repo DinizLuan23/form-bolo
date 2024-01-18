@@ -9,13 +9,16 @@ import * as yup from 'yup';
 
 // Utils
 import moment from 'moment';
+import { SelectForm } from './components/selectForm';
 
-const bolos = [
-   { id: 'cake1', image:'cake1.jpg' },
-   { id: 'cake2', image:'cake2.jpg' },
-   { id: 'cake3', image:'cake3.jpg' },
-   { id: 'cake4', image:'cake4.jpg' },
-]
+// Data
+import { cakes } from './data/cakes';
+import { countrys } from './data/countrys';
+
+// Services
+import { saveOrderCake } from './services';
+import { Loading } from './components/loading';
+import { useState } from 'react';
 
 const schema = yup.object({
    first_name: yup.string().required('Campo Obrigatório'),
@@ -34,8 +37,9 @@ const schema = yup.object({
 
 function App() {
    const { reset, control, handleSubmit, setValue, watch, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
-
    const cakeSelected = watch('cake_selected');
+
+   const [load, setLoad] = useState(false);
 
    function handleChooseCake(cake){
       setValue('cake_selected', cake);
@@ -46,10 +50,18 @@ function App() {
          window.location.href = '#divbolos';
          return toast.info('Escolha um dos Bolos 😅');
       };
+
+      setLoad(true);
+
+      const result = await saveOrderCake(data);
+      if(result) reset({});
+
+      setLoad(false);
    }
 
    return (
-      <div className='bg-[#EBF6FC] w-screen h-full min-h-screen'>
+      <div className='bg-[#EBF6FC] w-full h-full min-h-screen min-w-screen'>
+         { load && <Loading /> }
          <div className='m-auto bg-slate-200 max-w-[800px] py-14'>
             <div>
                <h1 className='text-[#244580] text-5xl'>
@@ -67,17 +79,17 @@ function App() {
                </p>
                <div className='grid grid-cols-2 gap-10 mt-8'>
                   {
-                     bolos.length > 0 ? bolos.map(bolo => (
+                     cakes.length > 0 ? cakes.map(cake => (
                         <div className='flex'>
                            <input 
-                              id={bolo.id} 
+                              id={cake.id} 
                               type='radio' 
                               className='mr-3' 
                               onClick={(e) => handleChooseCake(e.target.id)}
-                              checked={cakeSelected == bolo.id}
+                              checked={cakeSelected == cake.id}
                            />
-                           <label for={bolo.id}>
-                              <img src={bolo.image} className='h-full rounded-lg'/>
+                           <label for={cake.id}>
+                              <img src={cake.image} className='h-full rounded-lg'/>
                            </label>
                         </div>
                      )) : <></>
@@ -171,14 +183,17 @@ function App() {
                      />
                      <InputForm
                         name="zip_code"
+                        type='number'
                         control={control}
                         placeholder="Postal / Zip Code"
+                        inputmode="numeric"
                         error={errors.zip_code && errors.zip_code.message}
                      />
-                     <InputForm
+                     <SelectForm
                         name="country"
                         control={control}
                         placeholder="Country"
+                        options={countrys}
                         error={errors.country && errors.country.message}
                      />
                   </div>

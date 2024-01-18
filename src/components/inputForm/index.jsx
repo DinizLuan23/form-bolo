@@ -29,12 +29,7 @@ export const InputForm = ({ control, name, type, label, error, ...rest }) => {
 
                return (
                   <div className="containerInput">
-                     {
-                        label &&
-                        <label htmlFor={name}>
-                           {label}
-                        </label>
-                     }
+                     { label && <label htmlFor={name}> {label} </label> }
                      <input
                         id={name}
                         type={type || "text"}

@@ -5,6 +5,8 @@ import App from './App.jsx'
 // Styles
 import './app.css';
 import 'react-toastify/dist/ReactToastify.css';
+
+// Components
 import { ToastContainer } from 'react-toastify';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
