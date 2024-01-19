@@ -24,6 +24,10 @@ export const ContainerInputForm = styled.div`
          height: 50px;
          background: #FFF;
          margin-top: ${({ label }) => label == ' ' ? '1.5rem' : '0px'};
+
+         @media (max-width: 640px){
+            margin-top: 0px;
+         }
       }
    }
 
